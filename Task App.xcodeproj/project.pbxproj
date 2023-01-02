@@ -7,22 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8F24FEB429635DAF0068EE57 /* Task_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FEB329635DAF0068EE57 /* Task_AppApp.swift */; };
+		8F24FEB429635DAF0068EE57 /* Task_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FEB329635DAF0068EE57 /* Task_App.swift */; };
 		8F24FEB629635DAF0068EE57 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FEB529635DAF0068EE57 /* ContentView.swift */; };
 		8F24FEB829635DB00068EE57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F24FEB729635DB00068EE57 /* Assets.xcassets */; };
 		8F24FEBB29635DB00068EE57 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F24FEBA29635DB00068EE57 /* Preview Assets.xcassets */; };
 		8F24FEBD29635DB00068EE57 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FEBC29635DB00068EE57 /* Persistence.swift */; };
-		8F24FEC029635DB00068EE57 /* Task_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FEBE29635DB00068EE57 /* Task_App.xcdatamodeld */; };
+		8F24FECB29635EB00068EE57 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FECA29635EB00068EE57 /* CoreDataManager.swift */; };
+		8F24FECF296362530068EE57 /* ListItemModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FECC296362530068EE57 /* ListItemModel.xcdatamodeld */; };
+		8F24FED129636EA00068EE57 /* ItemDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FED029636EA00068EE57 /* ItemDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8F24FEB029635DAF0068EE57 /* Task App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Task App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F24FEB329635DAF0068EE57 /* Task_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task_AppApp.swift; sourceTree = "<group>"; };
+		8F24FEB329635DAF0068EE57 /* Task_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task_App.swift; sourceTree = "<group>"; };
 		8F24FEB529635DAF0068EE57 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8F24FEB729635DB00068EE57 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F24FEBA29635DB00068EE57 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8F24FEBC29635DB00068EE57 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		8F24FEBF29635DB00068EE57 /* Task_App.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Task_App.xcdatamodel; sourceTree = "<group>"; };
+		8F24FECA29635EB00068EE57 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		8F24FECD296362530068EE57 /* ListItemModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ListItemModel.xcdatamodel; sourceTree = "<group>"; };
+		8F24FECE296362530068EE57 /* ItemModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ItemModel.xcdatamodel; sourceTree = "<group>"; };
+		8F24FED029636EA00068EE57 /* ItemDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,12 +60,14 @@
 		8F24FEB229635DAF0068EE57 /* Task App */ = {
 			isa = PBXGroup;
 			children = (
-				8F24FEB329635DAF0068EE57 /* Task_AppApp.swift */,
+				8F24FEC929635E9F0068EE57 /* Managers */,
+				8F24FEB329635DAF0068EE57 /* Task_App.swift */,
 				8F24FEB529635DAF0068EE57 /* ContentView.swift */,
 				8F24FEB729635DB00068EE57 /* Assets.xcassets */,
 				8F24FEBC29635DB00068EE57 /* Persistence.swift */,
-				8F24FEBE29635DB00068EE57 /* Task_App.xcdatamodeld */,
 				8F24FEB929635DB00068EE57 /* Preview Content */,
+				8F24FECC296362530068EE57 /* ListItemModel.xcdatamodeld */,
+				8F24FED029636EA00068EE57 /* ItemDetail.swift */,
 			);
 			path = "Task App";
 			sourceTree = "<group>";
@@ -71,6 +78,14 @@
 				8F24FEBA29635DB00068EE57 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		8F24FEC929635E9F0068EE57 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				8F24FECA29635EB00068EE57 /* CoreDataManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,10 +158,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F24FEC029635DB00068EE57 /* Task_App.xcdatamodeld in Sources */,
+				8F24FECB29635EB00068EE57 /* CoreDataManager.swift in Sources */,
+				8F24FED129636EA00068EE57 /* ItemDetail.swift in Sources */,
 				8F24FEBD29635DB00068EE57 /* Persistence.swift in Sources */,
 				8F24FEB629635DAF0068EE57 /* ContentView.swift in Sources */,
-				8F24FEB429635DAF0068EE57 /* Task_AppApp.swift in Sources */,
+				8F24FECF296362530068EE57 /* ListItemModel.xcdatamodeld in Sources */,
+				8F24FEB429635DAF0068EE57 /* Task_App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +295,7 @@
 				DEVELOPMENT_TEAM = 7B92WZDTUV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -307,6 +325,7 @@
 				DEVELOPMENT_TEAM = 7B92WZDTUV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -349,13 +368,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		8F24FEBE29635DB00068EE57 /* Task_App.xcdatamodeld */ = {
+		8F24FECC296362530068EE57 /* ListItemModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				8F24FEBF29635DB00068EE57 /* Task_App.xcdatamodel */,
+				8F24FECD296362530068EE57 /* ListItemModel.xcdatamodel */,
+				8F24FECE296362530068EE57 /* ItemModel.xcdatamodel */,
 			);
-			currentVersion = 8F24FEBF29635DB00068EE57 /* Task_App.xcdatamodel */;
-			path = Task_App.xcdatamodeld;
+			currentVersion = 8F24FECD296362530068EE57 /* ListItemModel.xcdatamodel */;
+			path = ListItemModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

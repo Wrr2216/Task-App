@@ -9,80 +9,106 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
-
+    
+    // Define the CoreDataManager class
+    let coreDM: CoreDataManager
+    
+    // Define the Item title and description
+    @State private var itemTitle: String = ""
+    @State private var itemDesc: String = ""
+    
+    // Define the items array from the ListItem entity
+    @State private var items: [ListItem] = [ListItem]()
+    
+    // This is used for the alert when creating tasks
+    @State private var presentAlert = false
+    
+    // Declare if the task is high priority, currently not used TODO
+    @State private var highPriority: Bool = true
+    
+    // Defines the state for refreshing the contents when adding an item
+    @State private var needsRefresh: Bool = false
+    
+    // refresh the items array with updated information
+    private func populateItems(){
+        items = coreDM.getAllItems()
+    }
+    
     var body: some View {
         NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
-                    }
+            VStack(alignment: .center){
+                
+                // Button to create new task
+                // This pops up an alert box that lets the user add the title and description
+                Button("New Task"){
+                    presentAlert = true
+                }.alert("Create new task", isPresented: $presentAlert, actions: {
+                    TextField("Task Name", text: $itemTitle)
+                        .foregroundColor(/*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/)
+                    TextField("Task Description", text: $itemDesc)
+                        .foregroundColor(/*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/)
+                    
+                    Button("Finish", action: {
+                        if !itemTitle.isEmpty {
+                            coreDM.saveItem(title: itemTitle, desc: itemDesc)
+                            itemTitle = ""
+                            itemDesc = ""
+                            populateItems()
+                        }else{
+                            
+                        }
+                        
+                    })
+                    Button("Cancel", role: .cancel, action: {})
+                }, message: {
+                    Text("Name your task and give it a short description.")
+                }).background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color.green/*@END_MENU_TOKEN@*/)
+                    .buttonStyle(.bordered)
+                    .buttonBorderShape(.capsule)
+                    .foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
+                
+                // This is the code for populating the list of items
+                List {
+                    ForEach(items, id: \.self){ item in
+                        VStack(alignment: .leading) {
+                            Text(item.title ?? "")
+                                .font(.headline)
+                                .multilineTextAlignment(.leading)
+                            Text(item.desc ?? "")
+                                .font(.subheadline)
+                                .multilineTextAlignment(.leading)
+                        }
+                        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
+                    }.onDelete(perform: { indexSet in
+                        indexSet.forEach{ index in
+                            let item = items[index]
+                            coreDM.deleteItem(listItem: item)
+                            populateItems()
+                        }
+                    })
+
                 }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            Text("Select an item")
+                .foregroundColor(.black)
+                .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color.gray/*@END_MENU_TOKEN@*/)
+                
+                Spacer()
+            }.padding()
+                .navigationBarTitle("Tasks", displayMode: .inline)
+            
+                // This makes sure the items populate the list when the app loads
+                .onAppear(perform: {
+                    items = coreDM.getAllItems()
+                })
         }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
+        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color.black/*@END_MENU_TOKEN@*/)
     }
 }
-
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    
+    
+    
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView(coreDM: CoreDataManager())
+        }
     }
-}
+    
