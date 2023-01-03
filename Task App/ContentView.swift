@@ -40,32 +40,6 @@ struct ContentView: View {
                 
                 // Button to create new task
                 // This pops up an alert box that lets the user add the title and description
-                Button("New Task"){
-                    presentAlert = true
-                }.alert("Create new task", isPresented: $presentAlert, actions: {
-                    TextField("Task Name", text: $itemTitle)
-                        .foregroundColor(/*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/)
-                    TextField("Task Description", text: $itemDesc)
-                        .foregroundColor(/*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/)
-                    
-                    Button("Finish", action: {
-                        if !itemTitle.isEmpty {
-                            coreDM.saveItem(title: itemTitle, desc: itemDesc)
-                            itemTitle = ""
-                            itemDesc = ""
-                            populateItems()
-                        }else{
-                            
-                        }
-                        
-                    })
-                    Button("Cancel", role: .cancel, action: {})
-                }, message: {
-                    Text("Name your task and give it a short description.")
-                }).background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color.green/*@END_MENU_TOKEN@*/)
-                    .buttonStyle(.bordered)
-                    .buttonBorderShape(.capsule)
-                    .foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
                 
                 // This is the code for populating the list of items
                 List {
@@ -86,10 +60,32 @@ struct ContentView: View {
                             populateItems()
                         }
                     })
-
+                    Button("Create New Task"){
+                        presentAlert = true
+                    }.alert("Create new task", isPresented: $presentAlert, actions: {
+                        TextField("Task Name", text: $itemTitle)
+                            .foregroundColor(/*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/)
+                        TextField("Task Description", text: $itemDesc)
+                            .foregroundColor(/*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/)
+                        
+                        Button("Finish", action: {
+                            if !itemTitle.isEmpty {
+                                coreDM.saveItem(title: itemTitle, desc: itemDesc)
+                                itemTitle = ""
+                                itemDesc = ""
+                                populateItems()
+                            }else{
+                                
+                            }
+                            
+                        })
+                        Button("Cancel", role: .cancel, action: {})
+                    }, message: {
+                        Text("Name your task and give it a short description.")
+                    })
                 }
                 .foregroundColor(.black)
-                .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color.gray/*@END_MENU_TOKEN@*/)
+                .background(.white)
                 
                 Spacer()
             }.padding()
@@ -99,6 +95,12 @@ struct ContentView: View {
                 .onAppear(perform: {
                     items = coreDM.getAllItems()
                 })
+            
+            VStack {
+          
+            }
+            .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color.blue/*@END_MENU_TOKEN@*/)
+            
         }
         .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color.black/*@END_MENU_TOKEN@*/)
     }
